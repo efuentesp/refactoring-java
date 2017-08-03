@@ -98,4 +98,24 @@ public class ClienteTests {
 		// assert
 		assertEquals("Con una renta", reciboEsperado, reciboResultado);
 	}
+	
+	@Test
+	public void emitirReciboHTMLRentaPeliculasVarias() {
+		// arrange
+		Cliente cliente = new Cliente("Juan Perez");
+		Pelicula salvandoSoldadoRyan = new Pelicula("Salvando al Soldado Ryan", Pelicula.CATALOGO);
+		Pelicula kong = new Pelicula("Kong", Pelicula.ESTRENO);
+		Pelicula toyStory = new Pelicula("Toy Story", Pelicula.INFANTIL);
+		String reciboEsperado = "<h1>Rentas del Cliente: <em>Juan Perez</em></h1><br><table><tr><td>Salvando al Soldado Ryan</td><td>2.0</td></tr><tr><td>Kong</td><td>3.0</td></tr>" + 
+				"<tr><td>Toy Story</td><td>1.5</td></tr></table><br><p>Cantidad a pagar: 6.5</p><br><p>Has acumulado 3 puntos adicionales a tu cuenta.</p><br>";
+		
+		// act
+		cliente.agregarRenta(new Renta(salvandoSoldadoRyan, 1));
+		cliente.agregarRenta(new Renta(kong, 1));
+		cliente.agregarRenta(new Renta(toyStory, 1));
+		String reciboResultado = cliente.emitirReciboRentaHTML();
+		
+		// assert
+		assertEquals("Con una renta", reciboEsperado, reciboResultado);
+	}
 }

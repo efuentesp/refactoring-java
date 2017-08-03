@@ -48,4 +48,33 @@ public class Cliente {
 		
 		return resultado.toString();
 	}
+
+	public String emitirReciboRentaHTML() {
+		double montoTotal = 0;
+		int puntosClienteFrecuente = 0;
+		StringBuilder resultado = new StringBuilder();
+		resultado.append("<h1>Rentas del Cliente: <em>" + getNombre() + "</em></h1><br>");
+		Iterator<Renta> listaRentas = this.rentas.iterator();
+		
+		resultado.append("<table>");
+		while (listaRentas.hasNext()) {
+			Renta pelicula = listaRentas.next();
+			
+			double monto = pelicula.calcularImporte();
+			
+			puntosClienteFrecuente += pelicula.calcularPuntosClienteFrecuente();
+			
+			// Muestra detalle de la renta
+			resultado.append("<tr><td>" + pelicula.getPelicula().getTitulo() + "</td><td>" + monto + "</td></tr>");
+		
+			montoTotal += monto;
+		}
+		resultado.append("</table><br>");
+		
+		// Agregar totales
+		resultado.append("<p>Cantidad a pagar: " + montoTotal + "</p><br>");
+		resultado.append("<p>Has acumulado " + puntosClienteFrecuente + " puntos adicionales a tu cuenta.</p><br>");
+		
+		return resultado.toString();
+	}
 }
