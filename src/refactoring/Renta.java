@@ -26,39 +26,10 @@ public class Renta {
 	}
 	
 	public double calcularImporte() {
-		double monto = 0;
-		
-		switch (getPelicula().getTipo()) {
-			case Pelicula.CATALOGO:
-				monto += 2;
-				if (getDiasRentada() > 2) {
-					monto += (getDiasRentada() - 2) * 1.5;
-				}
-				break;
-			case Pelicula.ESTRENO:
-				monto += getDiasRentada() * 3;
-				break;
-			case Pelicula.INFANTIL:
-				monto += 1.5;
-				if (getDiasRentada() > 3) {
-					monto += (getDiasRentada() - 3) * 1.5;
-				}
-				break;
-			default:
-				break;
-		}
-		
-		return monto;
+		return getPelicula().calcularImporte(getDiasRentada());
 	}
 	
 	public int calcularPuntosClienteFrecuente() {
-		int puntosClienteFrecuente = 1;
-		
-		// Agregar bono por renta de dos días en películas de estreno
-		if ((getPelicula().getTipo() == Pelicula.ESTRENO) && getDiasRentada() > 1) {
-			puntosClienteFrecuente++;
-		}
-		
-		return puntosClienteFrecuente;
+		return getPelicula().calcularPuntosClienteFrecuente(getDiasRentada());
 	}
 }

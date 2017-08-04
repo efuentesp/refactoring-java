@@ -6,8 +6,8 @@ public class Pelicula {
 	public static final int INFANTIL = 2;
 	
 	private String titulo;
-	private int tipo;
-	
+	private PrecioPelicula precio;
+
 	public Pelicula(String titulo, int tipo) {
 		setTitulo(titulo);
 		setTipo(tipo);
@@ -22,11 +22,37 @@ public class Pelicula {
 	}
 
 	public int getTipo() {
-		return tipo;
+		return precio.getTipoPelicula();
 	}
 
 	public void setTipo(int tipo) {
-		this.tipo = tipo;
+		switch (tipo) {
+			case CATALOGO:
+				this.precio = new PrecioPeliculaCatalogo();
+				break;
+			case ESTRENO:
+				this.precio = new PrecioPeliculaEstreno();
+				break;
+			case INFANTIL:
+				this.precio = new PrecioPeliculaInfantil();
+				break;
+			default:
+				throw new IllegalArgumentException("Tipo de Película Incorrecto.");
+		}
 	}
-
+	
+	public double calcularImporte(int diasRentada) {
+		return precio.getPrecioRenta(diasRentada);
+	}
+	
+	public int calcularPuntosClienteFrecuente(int diasRentada) {
+		int puntosClienteFrecuente = 1;
+		
+		// Agregar bono por renta de dos días en películas de estreno
+		if ((getTipo() == Pelicula.ESTRENO) && diasRentada > 1) {
+			puntosClienteFrecuente++;
+		}
+		
+		return puntosClienteFrecuente;
+	}
 }
