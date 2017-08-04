@@ -8,4 +8,9 @@ public class PrecioPeliculaEstreno extends PrecioPelicula {
 	public double getPrecioRenta(int diasRentada) {
 		return diasRentada * 3d;
 	}
+	
+	@Override
+	public int calcularPuntosClienteFrecuente(int diasRentada) {
+		return (diasRentada > 1) ? 2 : 1;
+	}
 }
